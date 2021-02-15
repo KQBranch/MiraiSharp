@@ -7,7 +7,7 @@ namespace MiraiSharp.Console
         static void Main(string[] args)
         {
             Initialize.Do();
-            MiraiSharp.Library.Mirai.DownloadComponents.Start("2.2.2");
+            MiraiSharp.Library.Mirai.Components.Download("2.2.2").Wait();
 
             System.Console.ReadKey();
         }
