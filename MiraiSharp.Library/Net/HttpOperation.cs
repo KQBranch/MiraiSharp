@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace MiraiSharp.Library.Net
 {
-    class HttpOperation
+    public class HttpOperation
     {
         public static void Initialize()
         {
@@ -31,7 +31,7 @@ namespace MiraiSharp.Library.Net
         }
 
         [Obsolete("Have Not Implemented！")]
-        public static async Task<string> GetPostAsync(string url)
+        public static async Task<string> PostAsync(string url)
         {
             throw new NotImplementedException();
         }

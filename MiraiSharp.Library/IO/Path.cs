@@ -2,7 +2,7 @@
 
 namespace MiraiSharp.Library.IO
 {
-    class Path
+    public class Path
     {
         public static void Create(string[] directories = null, bool isNeedEmpty = false)
         {

@@ -1,6 +1,6 @@
 ﻿namespace MiraiSharp.Library.Mirai.Maven
 {
-    class LinkHelper
+    public class LinkHelper
     {
         private const string MAVEN_CENRRAL_CN = "https://maven.aliyun.com/repository/central/";
         private const string MAVEN_CENTRAL_OUT = "https://repo1.maven.org/maven2/";
@@ -23,11 +23,11 @@
             // g:net.mamoe
             // %20AND%20
             // a:mirai-core-all&core=gav&start=0&rows=5
-            return "https://search.maven.org/solrsearch/select?q=" + "" +
+            return "https://search.maven.org/solrsearch/select?q=" + 
                 "g:" + g +
                 "%20AND%20" +
                 "a:" + a +
-                "mirai-core-all&core=" + core +
+                "&core=" + core +
                 "&start=" + start +
                 "&rows=" + rows;
         }

@@ -1,4 +1,4 @@
-﻿namespace MiraiSharp.Library.Mirai.Maven
+﻿namespace MiraiSharp.Library.Maven
 {
     public enum LocationEnum
     {
