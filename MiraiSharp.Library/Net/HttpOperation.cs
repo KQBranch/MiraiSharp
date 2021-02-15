@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace MiraiSharp.Library.Net
 {
@@ -19,14 +20,14 @@ namespace MiraiSharp.Library.Net
 
         private static HttpClient _httpClient;
 
-        [Obsolete("Have Not Implemented！")]
-        public static string Get(string url)
+        public static async Task<string> GetStrAsync(string url)
         {
-            throw new NotImplementedException();
+            HttpResponseMessage hrm = await _httpClient.GetAsync(url);
+            return await hrm.Content.ReadAsStringAsync();
         }
 
         [Obsolete("Have Not Implemented！")]
-        public static string Post(string url)
+        public static async Task<string> GetPostAsync(string url)
         {
             throw new NotImplementedException();
         }

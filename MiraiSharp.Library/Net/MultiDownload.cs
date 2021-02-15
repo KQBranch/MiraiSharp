@@ -91,7 +91,7 @@ namespace MiraiSharp.Library
             try
             {
                 int[] ran = obj as int[];
-                string tmpFileBlock = System.IO.Path.GetTempPath() + Thread.CurrentThread.Name + ".tmp";
+                string tmpFileBlock = Path.GetTempPath() + Thread.CurrentThread.Name + ".tmp";
                 _tempFiles.Add(tmpFileBlock);
                 HttpWebRequest httprequest = (HttpWebRequest)WebRequest.Create(_fileUrl);
                 httprequest.AddRange(ran[0], ran[1]);
