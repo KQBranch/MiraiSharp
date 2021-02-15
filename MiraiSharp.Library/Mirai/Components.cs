@@ -13,6 +13,7 @@ namespace MiraiSharp.Library.Mirai
             { "mirai-console", "net.mamoe"},
         };
 
+        // FIXME: I DONT KNOW WHY, BUT IT SUCKS.
         public static Task DownloadComponent(string name, string version,
             string groupId = "net.mamoe",
             Maven.LinkHelper.MavenTarget mt = Maven.LinkHelper.MavenTarget.JCenter,
@@ -20,8 +21,9 @@ namespace MiraiSharp.Library.Mirai
             string path = "libs")
         => Task.Run(async () =>
         {
+            string cpath = path;
         start:
-            path = Path.Combine(path, name + "-" + version) + ".jar";
+            path = Path.Combine(cpath, name + "-" + version) + ".jar";
             var link = Maven.LinkHelper.GetDownloadLink(mt, groupId, name, version, location);
             MultiDownload md = new MultiDownload(
                     -1,
@@ -38,9 +40,11 @@ namespace MiraiSharp.Library.Mirai
                 Task.Run(() => { System.Threading.Thread.Sleep(500); }).Wait();
             }
             ComponentStatusEnum status = await CheckComponent(name, version, groupId);
+            System.Console.WriteLine(status);
             if (status != ComponentStatusEnum.Ok && status != ComponentStatusEnum.Unknown)
             {
                 File.Delete(path + ".sha1");
+                //File.Delete(path);
                 goto start;
             }
         });
@@ -99,7 +103,8 @@ namespace MiraiSharp.Library.Mirai
             Maven.LocationEnum location = Maven.LocationEnum.ChinaMainland,
             string path = "libs")
         {
-            path = Path.Combine(path, name + ".jar");
+            string cpath = path;
+            path = Path.Combine(path, name + "-" + version + ".jar");
             if (!File.Exists(path))
             {
                 return ComponentStatusEnum.Lost;
@@ -115,16 +120,19 @@ namespace MiraiSharp.Library.Mirai
                 if (string.IsNullOrEmpty(sha1))
                 {
                     File.Delete(path + ".sha1");
-                    return await CheckComponent(name, version, groupId, mt, location);
+                    return await CheckComponent(name, version, groupId, mt, location, cpath);
                 }
             }
 
+            System.Console.WriteLine("SRC: " + sha1);
             if (string.IsNullOrEmpty(sha1))
                 return ComponentStatusEnum.Unknown;
 
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
             byte[] hashBytes = Cryptography.Shared.Sha1.ComputeHash(fs);
             fs.Close();
+            var mm = Cryptography.Shared.ConvertByteArrayToHexString(hashBytes).ToLower();
+            System.Console.WriteLine("TGT: " + mm);
             if (sha1.ToLower() != Cryptography.Shared.ConvertByteArrayToHexString(hashBytes).ToLower())
                 return ComponentStatusEnum.Broken;
             return ComponentStatusEnum.Ok;
