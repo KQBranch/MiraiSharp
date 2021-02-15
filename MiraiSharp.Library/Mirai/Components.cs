@@ -13,17 +13,16 @@ namespace MiraiSharp.Library.Mirai
             { "mirai-console", "net.mamoe"},
         };
 
-        public static Task DownloadComponent(string name, string version, string groupId = "net.mamoe")
+        public static Task DownloadComponent(string name, string version,
+            string groupId = "net.mamoe",
+            Maven.LinkHelper.MavenTarget mt = Maven.LinkHelper.MavenTarget.JCenter,
+            Maven.LocationEnum location = Maven.LocationEnum.ChinaMainland,
+            string path = "libs")
         => Task.Run(async () =>
         {
         start:
-            string path = Path.Combine("libs", name + "-" + version) + ".jar";
-            var link = Maven.LinkHelper.GetDownloadLink(
-                   Maven.LinkHelper.MavenTarget.JCenter,
-                       groupId,
-                       name,
-                       version
-                       );
+            path = Path.Combine(path, name + "-" + version) + ".jar";
+            var link = Maven.LinkHelper.GetDownloadLink(mt, groupId, name, version, location);
             MultiDownload md = new MultiDownload(
                     -1,
                     link,
@@ -46,39 +45,44 @@ namespace MiraiSharp.Library.Mirai
             }
         });
 
-        public static async Task Download(string version)
+        public static async Task Download(string version,
+            Maven.LinkHelper.MavenTarget mt = Maven.LinkHelper.MavenTarget.JCenter,
+            Maven.LocationEnum location = Maven.LocationEnum.ChinaMainland)
         {
             foreach (var kv in _components)
             {
                 System.Console.WriteLine("BEGIN [" + kv.Key + "]");
-                await DownloadComponent(kv.Key, version, kv.Value);
+                await DownloadComponent(kv.Key, version, kv.Value, mt, location);
                 System.Console.WriteLine("COMPLELE [" + kv.Key + "]");
             }
         }
 
-        public static async Task<Dictionary<string, ComponentStatusEnum>> Check(string version)
+        public static async Task<Dictionary<string, ComponentStatusEnum>> Check(string version,
+            Maven.LinkHelper.MavenTarget mt = Maven.LinkHelper.MavenTarget.JCenter,
+            Maven.LocationEnum location = Maven.LocationEnum.ChinaMainland)
         {
             Dictionary<string, ComponentStatusEnum> componentStatus = new Dictionary<string, ComponentStatusEnum>();
             foreach (var kv in _components)
             {
-                componentStatus.Add(kv.Key, await CheckComponent(kv.Key, version));
+                componentStatus.Add(kv.Key, await CheckComponent(kv.Key, version, kv.Value,
+                    mt, location));
             }
             return componentStatus;
         }
 
-        public static async Task<string> DownloadSha1File(string name, string version, string groupId = "net.mamoe")
+        public static async Task<string> DownloadSha1File(string name, string version,
+            string groupId = "net.mamoe",
+            Maven.LinkHelper.MavenTarget mt = Maven.LinkHelper.MavenTarget.JCenter,
+            Maven.LocationEnum location = Maven.LocationEnum.ChinaMainland,
+            string path = "libs")
         {
-            string path = Path.Combine("libs", name + ".jar");
+            path = Path.Combine(path, name + ".jar");
             string sha1;
             try
             {
                 sha1 = await Net.HttpOperation.GetStrAsync(
                          Maven.LinkHelper.GetDownloadLink(
-                             Maven.LinkHelper.MavenTarget.JCenter,
-                             groupId,
-                             name,
-                             version,
-                             extension: ".jar.sha1"));
+                             mt, groupId, name, version, location, ".jar.sha1"));
             }
             catch
             {
@@ -89,9 +93,13 @@ namespace MiraiSharp.Library.Mirai
             return sha1;
         }
 
-        public static async Task<ComponentStatusEnum> CheckComponent(string name, string version, string groupId = "net.mamoe")
+        public static async Task<ComponentStatusEnum> CheckComponent(string name,
+            string version, string groupId = "net.mamoe",
+            Maven.LinkHelper.MavenTarget mt = Maven.LinkHelper.MavenTarget.JCenter,
+            Maven.LocationEnum location = Maven.LocationEnum.ChinaMainland,
+            string path = "libs")
         {
-            string path = Path.Combine("libs", name + ".jar");
+            path = Path.Combine(path, name + ".jar");
             if (!File.Exists(path))
             {
                 return ComponentStatusEnum.Lost;
@@ -99,7 +107,7 @@ namespace MiraiSharp.Library.Mirai
             string sha1;
             if (!File.Exists(path + ".sha1"))
             {
-                sha1 = await DownloadSha1File(name, version, groupId);
+                sha1 = await DownloadSha1File(name, version, groupId, mt, location);
             }
             else
             {
@@ -107,7 +115,7 @@ namespace MiraiSharp.Library.Mirai
                 if (string.IsNullOrEmpty(sha1))
                 {
                     File.Delete(path + ".sha1");
-                    return await CheckComponent(name, version, groupId);
+                    return await CheckComponent(name, version, groupId, mt, location);
                 }
             }
 
