@@ -56,15 +56,33 @@ namespace MiraiSharp.Library
         public MultiDownload(int threahNum, string fileUrl, string savePath)
         {
             this._threadNum = threahNum;
-            this._thread = new Thread[threahNum];
+            if (threahNum > 0)
+                this._thread = new Thread[threahNum];
             this._fileUrl = fileUrl;
             this._savePath = savePath;
         }
         public void Start()
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(_fileUrl);
+            request.UserAgent = "Apache-Maven/3.3.9 (Java 1.8.0_121; Windows 10 10.0)";
+
             HttpWebResponse response = (HttpWebResponse)request.GetResponse();
             _fileSize = response.ContentLength;
+            if (_threadNum <= 0)
+            {
+                if (_fileSize < 10 * 1024 * 1024)
+                {
+                    _threadNum = 4;
+                }
+                else if (_fileSize < 40 * 1024 * 1024)
+                {
+                    _threadNum = 8;
+                } else
+                {
+                    _threadNum = 16;
+                }
+                _thread = new Thread[_threadNum];
+            }
             int singelNum = (int)(_fileSize / _threadNum);  //平均分配
             int remainder = (int)(_fileSize % _threadNum);  //获取剩余的
             request.Abort();
@@ -102,7 +120,6 @@ namespace MiraiSharp.Library
                 int getByteSize = httpFileStream.Read(by, 0, (int)by.Length); //Read方法将返回读入by变量中的总字节数
                 while (getByteSize > 0)
                 {
-                    Thread.Sleep(20);
                     lock (locker) _downloadSize += getByteSize;
                     localFileStram.Write(by, 0, getByteSize);
                     getByteSize = httpFileStream.Read(by, 0, (int)by.Length);
