@@ -1,4 +1,4 @@
-﻿namespace MiraiSharp.Library.Mirai.Maven
+﻿namespace MiraiSharp.Library.Maven
 {
     public class LinkHelper
     {
@@ -23,7 +23,7 @@
             // g:net.mamoe
             // %20AND%20
             // a:mirai-core-all&core=gav&start=0&rows=5
-            return "https://search.maven.org/solrsearch/select?q=" + 
+            return "https://search.maven.org/solrsearch/select?q=" +
                 "g:" + g +
                 "%20AND%20" +
                 "a:" + a +
