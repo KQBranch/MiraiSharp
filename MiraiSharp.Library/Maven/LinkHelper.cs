@@ -75,5 +75,15 @@
             // [2] V -> 2.4.0
             return GetDownloadLink(mt, info[0], info[1], info[2], location, extension);
         }
+
+        public static string GetMetadataLink(MavenTarget mt, string g, string a, LocationEnum location = LocationEnum.ChinaMainland, string extension = ".jar")
+        {
+            //net/mamoe/mirai-core-all/maven-metadata.xml
+            return GetMavenLink(mt, location) +    // Base url
+                g.Replace(".", "/") + "/" +        // net/mamoe/
+                a + "/" +                          // mirai-core-all/
+                "maven-metadata.xml";
+        }
+
     }
 }
