@@ -9,6 +9,7 @@ namespace MiraiSharp.Library
         public static void Do()
         {
             Net.HttpOperation.Initialize();
+            IO.Path.Create();
         }
     }
 }

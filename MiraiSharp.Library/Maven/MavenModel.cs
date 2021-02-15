@@ -39,7 +39,7 @@ namespace MiraiSharp.Library.Maven
             }
 
             if (doc.EC.Contains(ec))
-                return LinkHelper.GetDownloadLink(doc.G, doc.A, doc.V, location, extension);
+                return LinkHelper.GetDownloadLink(LinkHelper.MavenTarget.Central, doc.G, doc.A, doc.V, location, extension);
             return "";
         }
     }

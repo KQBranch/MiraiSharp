@@ -4,16 +4,37 @@
     {
         private const string MAVEN_CENRRAL_CN = "https://maven.aliyun.com/repository/central/";
         private const string MAVEN_CENTRAL_OUT = "https://repo1.maven.org/maven2/";
+        private const string MAVEN_JCENTER_CN = "https://maven.aliyun.com/repository/public/";
+        private const string MAVEN_JCENTER_OUT = "http://jcenter.bintray.com/";
 
-        public static string GetMavenCentralLink(LocationEnum location)
+        public enum MavenTarget
         {
-            switch (location)
+            JCenter,
+            Central
+        }
+
+        public static string GetMavenLink(MavenTarget mt, LocationEnum location)
+        {
+            switch (mt)
             {
-                case LocationEnum.ChinaMainland:
-                    return MAVEN_CENRRAL_CN;
-                default:
-                    return MAVEN_CENTRAL_OUT;
+                case MavenTarget.JCenter:
+                    switch (location)
+                    {
+                        case LocationEnum.ChinaMainland:
+                            return MAVEN_JCENTER_CN;
+                        default:
+                            return MAVEN_JCENTER_OUT;
+                    }
+                case MavenTarget.Central:
+                    switch (location)
+                    {
+                        case LocationEnum.ChinaMainland:
+                            return MAVEN_CENRRAL_CN;
+                        default:
+                            return MAVEN_CENTRAL_OUT;
+                    }
             }
+            return "";
         }
 
         // FIXME: MAY NOT WORK IN CHINA
@@ -32,10 +53,10 @@
                 "&rows=" + rows;
         }
 
-        public static string GetDownloadLink(string g, string a, string v, LocationEnum location = LocationEnum.ChinaMainland, string extension = ".jar")
+        public static string GetDownloadLink(MavenTarget mt, string g, string a, string v, LocationEnum location = LocationEnum.ChinaMainland, string extension = ".jar")
         {
             //net/mamoe/mirai-core-all/2.4.0/mirai-core-all-2.4.0-all.jar
-            return GetMavenCentralLink(location) + // Base url
+            return GetMavenLink(mt, location) + // Base url
                 g.Replace(".", "/") + "/" +        // net/mamoe/
                 a + "/" +                          // mirai-core-all/
                 v + "/" +                          // 2.4.0/
@@ -43,7 +64,7 @@
                 extension;                         // mirai-core-all-2.4.0-all.jar
         }
 
-        public static string GetDownloadLink(string id, string extension = ".jar", LocationEnum location = LocationEnum.ChinaMainland)
+        public static string GetDownloadLink(MavenTarget mt, string id, string extension = ".jar", LocationEnum location = LocationEnum.ChinaMainland)
         {
             // id -> net.mamoe:mirai-core-all:2.4.0
             // query -> net/mamoe/mirai-core-all/2.4.0/mirai-core-all-2.4.0-all.jar
@@ -52,7 +73,7 @@
             // [0] G -> net.mamoe
             // [1] A -> mirai-core-all
             // [2] V -> 2.4.0
-            return GetDownloadLink(info[0], info[1], info[2], location, extension);
+            return GetDownloadLink(mt, info[0], info[1], info[2], location, extension);
         }
     }
 }

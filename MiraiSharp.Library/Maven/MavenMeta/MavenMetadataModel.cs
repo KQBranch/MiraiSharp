@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Xml.Serialization;
 
-namespace MiraiSharp.Library.MavenMeta
+namespace MiraiSharp.Library.Maven.Meta
 {
     [XmlRoot("metadata")]
     public class MavenMetadataModel
@@ -29,7 +29,6 @@ namespace MiraiSharp.Library.MavenMeta
 
             [XmlElement("lastUpdated")]
             public string LastUpdated { get; set; }
-
         }
     }
 }
