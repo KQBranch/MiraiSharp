@@ -2,7 +2,7 @@
 {
     public class LinkHelper
     {
-        private const string MAVEN_CENRRAL_CN = "https://maven.aliyun.com/repository/central/";
+        private const string MAVEN_CENTRAL_CN = "https://maven.aliyun.com/repository/central/";
         private const string MAVEN_CENTRAL_OUT = "https://repo1.maven.org/maven2/";
         private const string MAVEN_JCENTER_CN = "https://maven.aliyun.com/repository/public/";
         private const string MAVEN_JCENTER_OUT = "http://jcenter.bintray.com/";
@@ -29,7 +29,7 @@
                     switch (location)
                     {
                         case LocationEnum.ChinaMainland:
-                            return MAVEN_CENRRAL_CN;
+                            return MAVEN_CENTRAL_CN;
                         default:
                             return MAVEN_CENTRAL_OUT;
                     }
