@@ -4,7 +4,7 @@ namespace MiraiSharp.Console
 {
     class Program
     {
-        static void Main(string[] args)
+        static async System.Threading.Tasks.Task Main(string[] args)
         {
             Initialize.Do();
         }

@@ -2,14 +2,13 @@
 using System.ComponentModel;
 using System.IO;
 using System.Net;
-using System.Threading;
 
 namespace MiraiSharp.Library.Net
 {
     class SingleDownload
     {
         private long _downloadedBytes;
-        public delegate void DownloadedBytesChange(object sender,EventArgs e);
+        public delegate void DownloadedBytesChange(object sender, EventArgs e);
         public event DownloadedBytesChange OnDownloadedBytesChange;
         public long TotalBytes { get; set; }
 
@@ -18,7 +17,7 @@ namespace MiraiSharp.Library.Net
             get => _downloadedBytes;
             set
             {
-                OnDownloadedBytesChange( new object(), new EventArgs());
+                OnDownloadedBytesChange(new object(), new EventArgs());
                 _downloadedBytes = value;
             }
         }
@@ -36,15 +35,15 @@ namespace MiraiSharp.Library.Net
 
         public void StartDownload(string downloadLink, string path)
         {
-            Thread thread = new Thread(() =>
-            {
-                File.Delete(path);
-                WebClient client = new WebClient();
-                client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(Client_DownloadProgressChanged);
-                client.DownloadFileCompleted += new AsyncCompletedEventHandler(Client_DownloadFileCompleted);
-                client.DownloadFileAsync(new Uri(downloadLink), path);
-            });
-            thread.Start();
+
+            File.Delete(path);
+            WebClient client = new WebClient();
+
+            client.DownloadProgressChanged += new DownloadProgressChangedEventHandler(Client_DownloadProgressChanged);
+            client.DownloadFileCompleted += new AsyncCompletedEventHandler(Client_DownloadFileCompleted);
+
+            client.DownloadFileAsync(new Uri(downloadLink), path);
+
         }
 
         void Client_DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)

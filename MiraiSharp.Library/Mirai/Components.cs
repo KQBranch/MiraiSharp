@@ -3,6 +3,7 @@ using MiraiSharp.Library.Net;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace MiraiSharp.Library.Mirai
 {
@@ -28,12 +29,20 @@ namespace MiraiSharp.Library.Mirai
         public class Downloader
         {
             private double _stepProgress;
-            public delegate void StepProgressChange(object sender,EventArgs e);
+            public delegate void StepProgressChange(object sender, EventArgs e);
             public event StepProgressChange OnStepProgressChange;
             public int AllSteps { get; set; }
             public int CurrentSteps { get; set; }
 
-            public double StepProgress { get; set; }
+            public double StepProgress
+            {
+                get => _stepProgress;
+                set
+                {
+                    _stepProgress = value;
+                    OnStepProgressChange(new object(), new EventArgs());
+                }
+            }
             public Task DownloadComponent(string name, string version,
                 string groupId = "net.mamoe",
                 Maven.LinkHelper.MavenTarget mt = Maven.LinkHelper.MavenTarget.JCenter,
@@ -44,9 +53,9 @@ namespace MiraiSharp.Library.Mirai
                     AllSteps = 1;
                     CurrentSteps = 1;
                     _stepProgress = 0;
-                    
+
                     string cpath = path;
-                    start:
+                start:
                     path = Path.Combine(cpath, name + "-" + version) + ".jar";
                     var link = Maven.LinkHelper.GetDownloadLink(mt, groupId, name, version, location);
                     System.Console.WriteLine(link);
@@ -56,8 +65,12 @@ namespace MiraiSharp.Library.Mirai
                     {
                         StepProgress = md.DownloadedPercent;
                     };
-                    
+
                     md.StartDownload(link, path);
+                    await Task.Run(() =>
+                    {
+                        while (!md.IsCompleted) { }
+                    });
 
                     ComponentStatusEnum status = await CheckComponent(name, version, groupId);
                     System.Console.WriteLine(status);
