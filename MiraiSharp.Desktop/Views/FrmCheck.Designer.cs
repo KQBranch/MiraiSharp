@@ -66,7 +66,7 @@ namespace MiraiSharp.Desktop.Views
             // ClhName
             // 
             this.ClhName.Text = "名称";
-            this.ClhName.Width = 160;
+            this.ClhName.Width = 200;
             // 
             // ClhStatus
             // 
@@ -110,14 +110,17 @@ namespace MiraiSharp.Desktop.Views
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(800, 419);
             this.Controls.Add(this.LblFixLabel);
             this.Controls.Add(this.PrbDownloadPercent);
             this.Controls.Add(this.BtnRecovery);
             this.Controls.Add(this.LsvList);
             this.Controls.Add(this.BtnCheck);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
             this.Name = "FrmCheck";
-            this.Text = "FrmCheck";
+            this.Text = "组件检查工具";
             this.ResumeLayout(false);
             this.PerformLayout();
 
