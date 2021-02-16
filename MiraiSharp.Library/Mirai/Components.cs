@@ -25,6 +25,7 @@ namespace MiraiSharp.Library.Mirai
         start:
             path = Path.Combine(cpath, name + "-" + version) + ".jar";
             var link = Maven.LinkHelper.GetDownloadLink(mt, groupId, name, version, location);
+            System.Console.WriteLine(link);
             MultiDownload md = new MultiDownload(
                     -1,
                     link,
