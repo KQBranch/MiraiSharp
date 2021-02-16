@@ -8,8 +8,21 @@ namespace MiraiSharp.Library.Net
 {
     class SingleDownload
     {
+        private long _downloadedBytes;
+        public delegate void DownloadedBytesChange(object sender,EventArgs e);
+        public event DownloadedBytesChange OnDownloadedBytesChange;
         public long TotalBytes { get; set; }
-        public long DownloadedBytes { get; set; }
+
+        public long DownloadedBytes
+        {
+            get => _downloadedBytes;
+            set
+            {
+                OnDownloadedBytesChange( new object(), new EventArgs());
+                _downloadedBytes = value;
+            }
+        }
+
         public double DownloadedPercent
         {
             get

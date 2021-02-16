@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace MiraiSharp.Library
+﻿namespace MiraiSharp.Library
 {
     public class Initialize
     {
         public static void Do()
         {
             Net.HttpOperation.Initialize();
-            IO.Path.Create();
+            IO.Path.Initialize();
         }
     }
 }

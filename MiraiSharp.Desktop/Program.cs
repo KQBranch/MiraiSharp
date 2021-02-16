@@ -11,6 +11,7 @@ namespace MiraiSharp.Desktop
         [STAThread]
         static void Main()
         {
+            Library.Initialize.Do();
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

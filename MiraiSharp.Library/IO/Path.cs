@@ -4,7 +4,7 @@ namespace MiraiSharp.Library.IO
 {
     public class Path
     {
-        public static void Create(string[] directories = null, bool isNeedEmpty = false)
+        public static void Initialize(string[] directories = null, bool isNeedEmpty = false)
         {
             if (directories is null)
             {
