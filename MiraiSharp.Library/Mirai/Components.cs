@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using MiraiSharp.Library.Net;
+
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -8,9 +10,9 @@ namespace MiraiSharp.Library.Mirai
     {
         static Dictionary<string, string> _components = new Dictionary<string, string>
         {
-            { "mirai-core-all","net.mamoe"},
             { "mirai-console-terminal", "net.mamoe"},
             { "mirai-console", "net.mamoe"},
+            { "mirai-core-all","net.mamoe"}
         };
 
         // FIXME: I DONT KNOW WHY, BUT IT SUCKS.
@@ -26,6 +28,7 @@ namespace MiraiSharp.Library.Mirai
             path = Path.Combine(cpath, name + "-" + version) + ".jar";
             var link = Maven.LinkHelper.GetDownloadLink(mt, groupId, name, version, location);
             System.Console.WriteLine(link);
+            /* FIXME: May broken
             MultiDownload md = new MultiDownload(
                     -1,
                     link,
@@ -40,6 +43,15 @@ namespace MiraiSharp.Library.Mirai
                     100.0 * md.DownloadSize / md.FileSize + "%");
                 Task.Run(() => { System.Threading.Thread.Sleep(500); }).Wait();
             }
+            */
+            SingleDownload md = new SingleDownload();
+            md.StartDownload(link, path);
+            while (!md.IsCompleted)
+            {
+                System.Console.WriteLine(md.DownloadedBytes + "/" + md.TotalBytes + " " +
+                    md.DownloadedPercent + "%");
+                Task.Run(() => { System.Threading.Thread.Sleep(500); }).Wait();
+            }
             ComponentStatusEnum status = await CheckComponent(name, version, groupId);
             System.Console.WriteLine(status);
             if (status != ComponentStatusEnum.Ok && status != ComponentStatusEnum.Unknown)
@@ -48,6 +60,7 @@ namespace MiraiSharp.Library.Mirai
                 //File.Delete(path);
                 goto start;
             }
+
         });
 
         public static async Task Download(string version,

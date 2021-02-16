@@ -148,7 +148,7 @@ namespace MiraiSharp.Library
         /// </summary>
         private void Complete()
         {
-            Stream mergeFile = new FileStream(@_savePath, FileMode.Create);
+            Stream mergeFile = new FileStream(_savePath, FileMode.Create);
             BinaryWriter AddWriter = new BinaryWriter(mergeFile);
             foreach (string file in _tempFiles)
             {
