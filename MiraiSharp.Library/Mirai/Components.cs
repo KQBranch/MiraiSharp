@@ -15,6 +15,16 @@ namespace MiraiSharp.Library.Mirai
             { "mirai-core-all","net.mamoe"}
         };
 
+        public static List<string> GetCoponentsList()
+        {
+            return new List<string>()
+            {
+                "mirai-console-terminal",
+                "mirai-console",
+                "mirai-core-all"
+            };
+        }
+
         // FIXME: I DONT KNOW WHY, BUT IT SUCKS.
         public static Task DownloadComponent(string name, string version,
             string groupId = "net.mamoe",
