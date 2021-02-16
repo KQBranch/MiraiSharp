@@ -67,7 +67,7 @@ namespace MiraiSharp.Desktop.Views
                     SetProgressBar(0);
                     Components.Downloader dl = new Components.Downloader();
                     dl.OnStepProgressChange += (o, e) =>
-                s    {
+                    {
                         SafeSetProgressBar((int)dl.StepProgress);
                     };
                     await dl.DownloadComponent(kv.Key, "2.2.2");
