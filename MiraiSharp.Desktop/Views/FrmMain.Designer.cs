@@ -34,9 +34,9 @@ namespace MiraiSharp.Desktop.Views
             this.TsmFrmCheck = new System.Windows.Forms.ToolStripMenuItem();
             this.TbcTabControl = new System.Windows.Forms.TabControl();
             this.TabConsole = new System.Windows.Forms.TabPage();
-            this.RtxConsole = new System.Windows.Forms.RichTextBox();
-            this.ChkAutoScroll = new System.Windows.Forms.CheckBox();
             this.BtnTestConsole = new System.Windows.Forms.Button();
+            this.ChkAutoScroll = new System.Windows.Forms.CheckBox();
+            this.RtxConsole = new System.Windows.Forms.RichTextBox();
             this.MspMenu.SuspendLayout();
             this.TbcTabControl.SuspendLayout();
             this.TabConsole.SuspendLayout();
@@ -74,7 +74,7 @@ namespace MiraiSharp.Desktop.Views
             this.TbcTabControl.Location = new System.Drawing.Point(0, 31);
             this.TbcTabControl.Name = "TbcTabControl";
             this.TbcTabControl.SelectedIndex = 0;
-            this.TbcTabControl.Size = new System.Drawing.Size(800, 407);
+            this.TbcTabControl.Size = new System.Drawing.Size(800, 422);
             this.TbcTabControl.TabIndex = 1;
             // 
             // TabConsole
@@ -85,18 +85,20 @@ namespace MiraiSharp.Desktop.Views
             this.TabConsole.Location = new System.Drawing.Point(4, 29);
             this.TabConsole.Name = "TabConsole";
             this.TabConsole.Padding = new System.Windows.Forms.Padding(3);
-            this.TabConsole.Size = new System.Drawing.Size(792, 374);
+            this.TabConsole.Size = new System.Drawing.Size(792, 389);
             this.TabConsole.TabIndex = 0;
             this.TabConsole.Text = "控制台";
             this.TabConsole.UseVisualStyleBackColor = true;
             // 
-            // RtxConsole
+            // BtnTestConsole
             // 
-            this.RtxConsole.Location = new System.Drawing.Point(3, 3);
-            this.RtxConsole.Name = "RtxConsole";
-            this.RtxConsole.Size = new System.Drawing.Size(680, 371);
-            this.RtxConsole.TabIndex = 0;
-            this.RtxConsole.Text = "";
+            this.BtnTestConsole.Location = new System.Drawing.Point(688, 35);
+            this.BtnTestConsole.Name = "BtnTestConsole";
+            this.BtnTestConsole.Size = new System.Drawing.Size(94, 29);
+            this.BtnTestConsole.TabIndex = 2;
+            this.BtnTestConsole.Text = "测试";
+            this.BtnTestConsole.UseVisualStyleBackColor = true;
+            this.BtnTestConsole.Click += new System.EventHandler(this.BtnTestConsole_Click);
             // 
             // ChkAutoScroll
             // 
@@ -108,15 +110,17 @@ namespace MiraiSharp.Desktop.Views
             this.ChkAutoScroll.Text = "自动滚动";
             this.ChkAutoScroll.UseVisualStyleBackColor = true;
             // 
-            // BtnTestConsole
+            // RtxConsole
             // 
-            this.BtnTestConsole.Location = new System.Drawing.Point(688, 35);
-            this.BtnTestConsole.Name = "BtnTestConsole";
-            this.BtnTestConsole.Size = new System.Drawing.Size(94, 29);
-            this.BtnTestConsole.TabIndex = 2;
-            this.BtnTestConsole.Text = "测试";
-            this.BtnTestConsole.UseVisualStyleBackColor = true;
-            this.BtnTestConsole.Click += new System.EventHandler(this.BtnTestConsole_Click);
+            this.RtxConsole.BackColor = System.Drawing.Color.MidnightBlue;
+            this.RtxConsole.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.RtxConsole.Font = new System.Drawing.Font("Consolas", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.RtxConsole.ForeColor = System.Drawing.SystemColors.Window;
+            this.RtxConsole.Location = new System.Drawing.Point(3, 3);
+            this.RtxConsole.Name = "RtxConsole";
+            this.RtxConsole.Size = new System.Drawing.Size(680, 371);
+            this.RtxConsole.TabIndex = 0;
+            this.RtxConsole.Text = "";
             // 
             // FrmMain
             // 
