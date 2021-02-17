@@ -15,7 +15,7 @@ namespace MiraiSharp.Desktop
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Views.FrmCheck());
+            Application.Run(new Views.FrmMain());
         }
     }
 }

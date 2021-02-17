@@ -9,19 +9,23 @@ namespace MiraiSharp.Desktop.Views
 {
     public partial class FrmCheck : Form
     {
+        private string _version;
+
         public ListViewItem CreateEmptyLVI()
         {
             return new ListViewItem();
 
         }
-        public FrmCheck()
+        public FrmCheck(string version)
         {
             InitializeComponent();
+            _version = version;
+            Check(_version).ConfigureAwait(false);
         }
 
         private async void BtnCheck_Click(object sender, EventArgs e)
         {
-            await Check("2.2.2");
+            await Check(_version);
         }
 
         private async Task<Dictionary<string, ComponentStatusEnum>> Check(string version)
@@ -52,7 +56,7 @@ namespace MiraiSharp.Desktop.Views
         private async void BtnRecovery_Click(object sender, EventArgs e)
         {
             Library.IO.Path.Initialize();
-            var stat = await Check("2.2.2");
+            var stat = await Check(_version);
             PrbDownloadPercent.Visible = true;
             LblFixLabel.Visible = true;
 
@@ -97,5 +101,6 @@ namespace MiraiSharp.Desktop.Views
             PrbDownloadPercent.Value = v;
             PrbDownloadPercent.Update();
         }
+
     }
 }

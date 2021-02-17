@@ -17,5 +17,11 @@ namespace MiraiSharp.Desktop.Views
             InitializeComponent();
         }
 
+        private void TsmFrmCheck_Click(object sender, System.EventArgs e)
+        {
+            FrmCheck frmCheck = new FrmCheck("2.2.2");
+            frmCheck.Show();
+        }
+
     }
 }
