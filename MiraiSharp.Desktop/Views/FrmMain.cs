@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -23,5 +18,27 @@ namespace MiraiSharp.Desktop.Views
             frmCheck.Show();
         }
 
+
+
+        public void TxtBoxOutput(string text)
+        {
+            Invoke(new Action(delegate ()
+            {
+                RtxConsole.AppendText(text + Environment.NewLine);
+                if (ChkAutoScroll.Checked)
+                    RtxConsole.ScrollToCaret();
+            }));
+        }
+
+        private Controllers.Command _c;
+
+        private void BtnTestConsole_Click(object sender, EventArgs e)
+        {
+            if (_c != null && !_c.IsNull())
+                _c.Kill();
+            _c = new Controllers.Command();
+            _c.DataRecieve = new Action<string>((v) => TxtBoxOutput(v));
+            _c.StartProgram("ping.exe", "google.com");
+        }
     }
 }
