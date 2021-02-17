@@ -23,7 +23,7 @@ namespace MiraiSharp.Desktop.Controllers
         public void Kill()
         {
             if (_p != null)
-                _p.Kill();
+                Basic.Try(() => _p.Kill());
         }
 
         public void StartProgram(string filename, string commandLine)
